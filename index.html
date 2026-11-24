@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Meu Caixa"><meta name="mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Meu Caixa</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Meu Caixa"><meta name="mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Meu Caixa</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#F1F4F2">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap">
@@ -483,6 +483,37 @@ body{background:radial-gradient(90% 38% at 50% -6%,color-mix(in srgb,var(--brand
 .row:active,.lrow:active,.qb:active,.opt:active{transform:scale(.985)}
 .gh h2{font-size:18px}
 .chip{font-weight:600}
+</style>
+<style>
+/* ===== Sistema de design: escala única ===== */
+:root{--sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--rad-sm:12px;--rad-md:16px;--rad-lg:22px;--rad-sheet:28px;
+ --t-title:30px;--t-h2:18px;--t-h3:16px;--t-body:15px;--t-small:13px;--t-micro:12px}
+.bar{background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+.ptitle{font-size:var(--t-title);font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.gh{margin-bottom:10px}.gh h2{font-size:var(--t-h2);font-weight:700}
+.card h3{font-size:var(--t-h3);font-weight:700}
+.card .sub,.sub{font-size:var(--t-small)}
+.row .meta,.meta{font-size:var(--t-micro)}
+.group{margin-top:var(--sp5)}
+.card{padding:18px;border-radius:var(--rad-lg)}
+.list{border-radius:var(--rad-lg)}
+/* seleção sempre na cor da marca */
+.fchip[aria-pressed="true"],.seg button[aria-pressed="true"]:not(.o):not(.i){background:var(--hero);color:#fff;border-color:transparent;box-shadow:0 6px 16px -8px var(--hero)}
+.seg button.o[aria-pressed="true"]{background:var(--surface);color:var(--out);box-shadow:var(--shadow)}
+.seg button.i[aria-pressed="true"]{background:var(--surface);color:var(--in);box-shadow:var(--shadow)}
+.fchip{min-height:40px;padding:8px 16px;font-weight:600}
+.seg{border-radius:var(--rad-md);padding:4px}
+.seg button{min-height:44px;border-radius:12px;font-size:var(--t-body)}
+/* botões e campos */
+.btn{min-height:50px;border-radius:var(--rad-md);font-size:var(--t-body);font-weight:600;letter-spacing:-.005em}
+.btn.pri{box-shadow:0 10px 22px -12px var(--accent)}
+input,select,textarea{border-radius:var(--rad-md);min-height:50px}
+.sheet{border-radius:var(--rad-sheet) var(--rad-sheet) 0 0}
+.sheet h2{font-size:20px;letter-spacing:-.02em}
+.chip{font-size:var(--t-micro);padding:3px 9px;border-radius:99px}
+.link{font-weight:600}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .fchip[aria-pressed="true"],:root:not([data-theme="light"]) .seg button[aria-pressed="true"]:not(.o):not(.i){box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}}
+:root[data-theme="dark"] .fchip[aria-pressed="true"],:root[data-theme="dark"] .seg button[aria-pressed="true"]:not(.o):not(.i){box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
 </style>
 <div id="splash" role="status" aria-label="Carregando o Meu Caixa"><div class="sp-in"><span class="sp-logo" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#FFB92E"/><circle cx="32" cy="32" r="26" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="2"/><path d="M38 24.5c-1-2.4-3.4-3.6-6-3.6-3.4 0-5.8 1.8-5.8 4.6 0 6.8 12.4 3.2 12.4 10 0 2.9-2.6 4.8-6.4 4.8-3 0-5.6-1.4-6.6-4M32 17v30" fill="none" stroke="#0A3B34" stroke-width="3.6" stroke-linecap="round"/></svg></span><b>Meu Caixa</b><span class="sp-bar"><i></i></span><small>Abrindo seu caixa…</small></div></div>
 <header class="bar">
