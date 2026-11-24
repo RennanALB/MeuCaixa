@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Meu Caixa"><meta name="mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Meu Caixa</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Meu Caixa"><meta name="mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Meu Caixa</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#F1F4F2">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap">
@@ -460,6 +460,31 @@ input:focus,select:focus{outline-color:var(--brand)}
 <style>.dls{display:grid;gap:6px;margin-top:10px}.dl{font-size:13px;line-height:1.4;color:var(--fg)}.dl.ok{color:var(--in);font-weight:600}.dl.bad{color:var(--out)}</style>
 <style>.crow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}.crow:first-child{border-top:0}.crow .meta{font-size:12px;color:var(--muted)}</style>
 <style>.avatar.ini{display:grid;place-items:center;background:var(--hero);color:#fff;font:700 20px var(--font-display)}.msgs{min-height:calc(100dvh - 400px)}@media(min-width:900px){.msgs{min-height:360px}}</style>
+<style>
+/* tela de carregamento */
+#splash{position:fixed;inset:0;z-index:500;display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 0%,#15705F 0%,#0E4D45 45%,#08302B 100%);color:#fff;transition:opacity .45s ease,visibility .45s;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+#splash.out{opacity:0;visibility:hidden}
+.sp-in{display:grid;justify-items:center;gap:14px}
+.sp-logo{width:84px;height:84px;display:grid;place-items:center;border-radius:26px;background:rgba(255,255,255,.1);box-shadow:0 20px 50px -12px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.16);animation:spPop .7s cubic-bezier(.2,.9,.3,1.2) both}
+.sp-logo svg{width:54px;height:54px;animation:spSpin 1.6s .5s ease-in-out infinite}
+.sp-in b{font:800 26px var(--font-display);letter-spacing:-.02em}
+.sp-bar{width:120px;height:4px;border-radius:4px;background:rgba(255,255,255,.18);overflow:hidden}
+.sp-bar i{display:block;height:100%;width:40%;border-radius:4px;background:#FFB92E;animation:spBar 1.1s ease-in-out infinite}
+.sp-in small{font-size:13px;opacity:.7}
+@keyframes spPop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes spSpin{0%,60%,100%{transform:rotateY(0)}30%{transform:rotateY(180deg)}}
+@keyframes spBar{0%{transform:translateX(-110%)}100%{transform:translateX(300%)}}
+/* repaginada */
+body{background:radial-gradient(90% 38% at 50% -6%,color-mix(in srgb,var(--brand) 16%,transparent),transparent 70%) no-repeat,var(--bg)}
+.card,.list{border:1px solid color-mix(in srgb,var(--line) 70%,transparent);box-shadow:0 1px 2px rgba(10,40,34,.05),0 14px 34px -18px rgba(10,40,34,.22)}
+.card.hero{border:0}
+.gh h2,.ptitle,.card h3{letter-spacing:-.015em}
+.row,.lrow,.qb,.opt,.tile{transition:transform .12s ease,background .15s}
+.row:active,.lrow:active,.qb:active,.opt:active{transform:scale(.985)}
+.gh h2{font-size:18px}
+.chip{font-weight:600}
+</style>
+<div id="splash" role="status" aria-label="Carregando o Meu Caixa"><div class="sp-in"><span class="sp-logo" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#FFB92E"/><circle cx="32" cy="32" r="26" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="2"/><path d="M38 24.5c-1-2.4-3.4-3.6-6-3.6-3.4 0-5.8 1.8-5.8 4.6 0 6.8 12.4 3.2 12.4 10 0 2.9-2.6 4.8-6.4 4.8-3 0-5.6-1.4-6.6-4M32 17v30" fill="none" stroke="#0A3B34" stroke-width="3.6" stroke-linecap="round"/></svg></span><b>Meu Caixa</b><span class="sp-bar"><i></i></span><small>Abrindo seu caixa…</small></div></div>
 <header class="bar">
   <div class="bar-in">
     <div class="brand" data-s="wait"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.5-.9-1.6-1.4-2.8-1.4-1.6 0-2.8.8-2.8 2s1 1.7 2.8 2.1c1.8.4 2.8 1 2.8 2.1s-1.2 2-2.8 2c-1.3 0-2.4-.5-2.9-1.5M12 6.5v1.3M12 16v1.5"/></svg></span><span class="bt">Meu Caixa<small id="sync">Carregando…</small></span></div>
@@ -766,8 +791,11 @@ function renderContas(T){
   h+=g||'<div class="card"><div class="empty">'+(items.length?(f==="aberto"?"Nada em aberto neste mês.":"Nada por aqui neste mês."):"Ainda não há lançamentos. Toque no + para começar.")+"</div></div>";
   $("vcontas").innerHTML=h;
 }
+function hideSplash(){const s=$("splash");if(!s||s.dataset.h)return;s.dataset.h=1;const w=Math.max(0,900-(performance.now()));setTimeout(()=>{s.classList.add("out");setTimeout(()=>s.remove(),500)},w)}
+setTimeout(()=>{const s=$("splash");if(s&&!s.dataset.h)hideSplash()},12000);
 function render(){
   if(!loaded) return;
+  hideSplash();
   applyCats();applyPrefs();
   $("mlabel").textContent=cap(monthName(curYm).replace(" de "," "));
   const T=totals(curYm);
