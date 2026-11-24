@@ -535,6 +535,34 @@ input,select,textarea{border-radius:var(--rad-md);min-height:50px}
 @media(min-width:1000px){.hero .rleg{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 16px}}
 </style>
 <style>.dash .group{margin-top:6px}.dash .cs>.group:first-child{margin-top:0}</style>
+<style>
+/* ===== Janelas: tudo cabe na tela, botões sempre visíveis ===== */
+.sheet{max-height:calc(100dvh - 8px);gap:10px;padding:10px 18px calc(12px + env(safe-area-inset-bottom,0px));scrollbar-width:none}
+.sheet::-webkit-scrollbar{display:none}
+.sheet .foot{position:sticky;bottom:calc(-12px - env(safe-area-inset-bottom,0px));background:var(--surface);padding:10px 0 calc(12px + env(safe-area-inset-bottom,0px));margin-top:auto;z-index:2;box-shadow:0 -10px 14px -10px var(--surface)}
+.sheet .f{gap:4px}
+.shead{display:grid;grid-template-columns:minmax(0,1fr) 188px;gap:10px;align-items:center}
+.shead h2{font-size:20px;line-height:1.15}
+.shead .seg{padding:3px}.shead .seg button{min-height:38px;font-size:14px}
+.sheet .money{padding-bottom:2px}.sheet .money input{font-size:32px;min-height:46px}.sheet .money span{font-size:20px}
+.sheet input,.sheet select{min-height:44px;padding:9px 12px}
+.sheet .seg button{min-height:40px}
+.sheet .btn{min-height:46px}
+.sheet .hint{font-size:12px;margin:0}
+/* categorias em grade de 4 */
+.sheet .cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.sheet .cc{flex-direction:column;justify-content:flex-start;gap:3px;border-radius:14px;padding:7px 3px 6px;min-height:0;height:62px;font-size:11px;line-height:1.15;text-align:center;overflow:hidden}
+.sheet .cc .av{width:26px;height:26px;border-radius:9px;flex:0 0 auto}
+.sheet .cc{display:flex;align-items:center}
+@media(min-width:600px){.sheet{max-width:540px;border-radius:26px;padding:20px 22px 0}.sheet .foot{bottom:0;padding-bottom:18px}}
+@media(max-height:740px){
+  .sheet{gap:8px}.sheet .cc{height:54px;padding-top:5px}.sheet .cc .av{width:22px;height:22px}
+  .sheet .money input{font-size:28px;min-height:40px}.sheet input,.sheet select{min-height:40px}
+  .sheet .seg button{min-height:36px}.sheet .btn{min-height:42px}.sheet .f label,.sheet .lab{font-size:11.5px}
+}
+</style>
+<style>.f3{display:grid;grid-template-columns:.7fr 1.5fr 1fr;gap:8px}.f3 input{padding-left:8px;padding-right:6px;font-size:15px!important}.f3 input[type=month]::-webkit-calendar-picker-indicator{display:none}@media(max-width:420px){.f3{grid-template-columns:.65fr 1.5fr .9fr}}</style>
+<style>@media(max-width:420px){.shead{grid-template-columns:minmax(0,1fr) 164px}.shead h2{font-size:18px}.shead .seg button{font-size:13px}}@media(max-height:700px){.sheet .hint,.sheet .cats-lab,.sheet .f>.lab{display:none}.sheet .f label{font-size:11px}.shead h2{white-space:nowrap}}</style>
 <div id="splash" role="status" aria-label="Carregando o Meu Caixa"><div class="sp-in"><span class="sp-logo" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#FFB92E"/><circle cx="32" cy="32" r="26" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="2"/><path d="M38 24.5c-1-2.4-3.4-3.6-6-3.6-3.4 0-5.8 1.8-5.8 4.6 0 6.8 12.4 3.2 12.4 10 0 2.9-2.6 4.8-6.4 4.8-3 0-5.6-1.4-6.6-4M32 17v30" fill="none" stroke="#0A3B34" stroke-width="3.6" stroke-linecap="round"/></svg></span><b>Meu Caixa</b><span class="sp-bar"><i></i></span><small>Abrindo seu caixa…</small></div></div>
 <header class="bar">
   <div class="bar-in">
@@ -1501,15 +1529,15 @@ function renderModal(){
     when='<div class="f"><label for="fdata">Data</label><div class="dq"><button type="button" class="btn sm" data-a="fdate" data-v="0">Hoje</button><button type="button" class="btn sm" data-a="fdate" data-v="-1">Ontem</button><input id="fdata" type="date" value="'+esc(f.data)+'" style="flex:1 1 140px;width:auto"></div></div>';
   }else{
     const last=f.rec==="parcelada"&&+f.parcelas>0&&f.inicio?addMonths(f.inicio,+f.parcelas-1):"";
-    when='<div class="f2"><div class="f"><label for="fdia">Dia do mês</label><input id="fdia" type="number" inputmode="numeric" min="1" max="31" value="'+esc(f.dia)+'"></div>'+
-      '<div class="f"><label for="fini">'+(f.rec==="parcelada"?"Primeira parcela":"Começa em")+'</label><input id="fini" type="month" value="'+esc(f.inicio)+'"></div></div>'+
+    when='<div class="f3"><div class="f"><label for="fdia">Dia</label><input id="fdia" type="number" inputmode="numeric" min="1" max="31" value="'+esc(f.dia)+'"></div>'+
+      '<div class="f"><label for="fini">'+(f.rec==="parcelada"?"1ª parcela":"Começa")+'</label><input id="fini" type="month" value="'+esc(f.inicio)+'"></div>'+
       (f.rec==="parcelada"
-        ?'<div class="f"><label for="fpar">Quantas parcelas</label><input id="fpar" type="number" inputmode="numeric" min="1" max="120" value="'+esc(f.parcelas)+'"><span class="hint">'+(last?"Última parcela em "+monthName(last)+".":"")+"</span></div>"
-        :'<div class="f"><label for="ffim">Termina em (opcional)</label><input id="ffim" type="month" value="'+esc(f.fim)+'"><span class="hint">Deixe em branco se não tem data para acabar.</span></div>');
+        ?'<div class="f"><label for="fpar">Parcelas</label><input id="fpar" type="number" inputmode="numeric" min="1" max="120" value="'+esc(f.parcelas)+'"></div></div>'+(last?'<div class="hint">Última parcela em '+monthName(last)+".</div>":"")
+        :'<div class="f"><label for="ffim">Termina</label><input id="ffim" type="month" value="'+esc(f.fim)+'" placeholder="opcional"></div></div><div class="hint">Termina em: opcional. Deixe vazio se não tem data para acabar.</div>');
   }
   $("modal").innerHTML='<div class="scrim" data-a="scrim"><form class="sheet" role="dialog" aria-modal="true" aria-label="Lançamento" id="fform"><div class="grab"></div>'+
-    "<h2>"+formTitle(f)+"</h2>"+
-    seg("ftipo",f.tipo,[["saida","Saída"],["entrada","Entrada"]],{saida:"o",entrada:"i"})+
+    '<div class="shead"><h2>'+formTitle(f)+"</h2>"+
+    seg("ftipo",f.tipo,[["saida","Saída"],["entrada","Entrada"]],{saida:"o",entrada:"i"})+"</div>"+
     '<div class="f"><label for="fval">'+(f.rec==="parcelada"?"Valor de cada parcela":"Valor")+'</label><div class="money"><span>R$</span><input id="fval" inputmode="decimal" value="'+esc(f.valor)+'" placeholder="0,00" autocomplete="off"></div></div>'+
     '<div class="f"><label for="fdesc">Descrição</label><input id="fdesc" value="'+esc(f.desc)+'" placeholder="'+(f.tipo==="entrada"?"Opcional. Ex: Diária, salário":"Opcional. Ex: Almoço, aluguel")+'" autocomplete="off"></div>'+
     '<div class="f"><span class="lab">Categoria</span><div class="cats" role="group" aria-label="Categoria">'+cats.map(c=>'<button type="button" class="cc" data-a="fcat" data-v="'+esc(c)+'" aria-pressed="'+(c===f.cat)+'">'+av(c)+esc(c)+"</button>").join("")+"</div></div>"+
