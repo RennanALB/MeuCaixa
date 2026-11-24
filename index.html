@@ -459,6 +459,7 @@ input:focus,select:focus{outline-color:var(--brand)}
 <style>.row .meta>span:first-child{overflow:visible;text-overflow:clip;white-space:normal}</style>
 <style>.dls{display:grid;gap:6px;margin-top:10px}.dl{font-size:13px;line-height:1.4;color:var(--fg)}.dl.ok{color:var(--in);font-weight:600}.dl.bad{color:var(--out)}</style>
 <style>.crow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}.crow:first-child{border-top:0}.crow .meta{font-size:12px;color:var(--muted)}</style>
+<style>.avatar.ini{display:grid;place-items:center;background:var(--hero);color:#fff;font:700 20px var(--font-display)}.msgs{min-height:calc(100dvh - 400px)}@media(min-width:900px){.msgs{min-height:360px}}</style>
 <header class="bar">
   <div class="bar-in">
     <div class="brand" data-s="wait"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.5-.9-1.6-1.4-2.8-1.4-1.6 0-2.8.8-2.8 2s1 1.7 2.8 2.1c1.8.4 2.8 1 2.8 2.1s-1.2 2-2.8 2c-1.3 0-2.4-.5-2.9-1.5M12 6.5v1.3M12 16v1.5"/></svg></span><span class="bt">Meu Caixa<small id="sync">Carregando…</small></span></div>
@@ -1349,9 +1350,9 @@ function greetHtml(){
 }
 function renderAjustes(T){
   const db=mode==="db";
-  const conta='<div class="card"><div class="acc"><img class="avatar" alt="" src="'+esc(meInfo.avatar||"data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Crect width=%2740%27 height=%2740%27 rx=%2720%27 fill=%27%23999%27/%3E%3C/svg%3E")+'"><div style="min-width:0"><b style="font-size:16px;overflow-wrap:anywhere">'+esc(meInfo.name||"Visitante")+'</b><div class="sub">'+(db?"Conectado pela sua conta do Claude":"Sem conta conectada")+"</div></div></div>"+
-    '<div class="st '+(db?"ok":"warn")+'"><i></i><span>'+(db?"Seus dados são salvos na sua conta e acompanham você em qualquer aparelho.":"Seus dados estão salvos só neste aparelho. Abra esta página já logado no Claude para salvar na conta.")+"</span></div>"+
-    '<p class="hint" style="margin:10px 0 0">Para compartilhar o Meu Caixa, use o botão Compartilhar do Claude nesta página. Cada pessoa entra com a própria conta, começa com um caixa vazio e só ela vê os seus lançamentos.</p></div>';
+  const conta='<div class="card"><div class="acc">'+(meInfo.avatar?'<img class="avatar" alt="" src="'+esc(meInfo.avatar)+'">':'<span class="avatar ini" aria-hidden="true">'+esc((meInfo.name||cfg.nome||"V").charAt(0).toUpperCase())+"</span>")+'<div style="min-width:0"><b style="font-size:16px;overflow-wrap:anywhere">'+esc(meInfo.name||"Visitante")+'</b><div class="sub">'+(db?"Conectado pela sua conta do Claude":"Sem conta conectada")+"</div></div></div>"+
+    '<div class="st '+(db?"ok":"warn")+'"><i></i><span>'+(db?"Seus dados são salvos na sua conta e acompanham você em qualquer aparelho.":"Salvo só neste aparelho. Abra já logado no Claude para guardar na conta.")+"</span></div>"+
+    '<p class="hint" style="margin:10px 0 0">Para compartilhar, use o botão Compartilhar do Claude. Cada pessoa tem o próprio caixa, e só ela vê os lançamentos dela.</p></div>';
   const perfil='<div class="card"><h3>Perfil</h3><div class="f" style="margin-top:10px"><label for="cfgnome">Como você quer ser chamado</label><input id="cfgnome" value="'+esc(cfg.nome)+'" placeholder="'+esc(meInfo.name||"Seu nome")+'" maxlength="40" autocomplete="given-name"></div></div>';
   const aparencia='<div class="card"><h3>Aparência</h3><div class="f" style="margin-top:10px"><span class="lab">Tema</span>'+seg("tema",cfg.tema,[["auto","Automático"],["light","Claro"],["dark","Escuro"]])+"</div>"+
     '<div class="f" style="margin-top:14px"><span class="lab">Cor do bloco principal</span><div class="swatches" role="radiogroup" aria-label="Cor do bloco principal">'+Object.entries(COR).map(([k,[n,c]])=>'<button type="button" class="sw" role="radio" aria-checked="'+(cfg.cor===k)+'" aria-label="'+n+'" title="'+n+'" data-a="cor" data-v="'+k+'" style="background:'+c+'"></button>').join("")+"</div></div></div>";
@@ -1723,6 +1724,10 @@ $("cform").addEventListener("submit",e=>{
     if(s&&typeof s.json==="function"){sampleFn=s}
   }catch(e){}
   try{const d=window.claude&&await window.claude.use("downloads");if(d&&typeof d.save==="function"){dlApi=d;if(view==="metas")render()}}catch(e){}
+})();
+(function(){let x0=0,y0=0,ok=false;
+  document.addEventListener("touchstart",e=>{const t=e.touches[0];x0=t.clientX;y0=t.clientY;ok=e.touches.length===1&&!e.target.closest("svg,.cbox,input,textarea,select,.sheet,.scrim,.msgs,.seg,.chips,[role=slider]")},{passive:true});
+  document.addEventListener("touchend",e=>{if(!ok||$("modal").innerHTML||view==="chat"||view==="ajustes")return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(Math.abs(dx)>90&&Math.abs(dy)<45){const b=$(dx<0?"next":"prev");if(b)b.click()}},{passive:true});
 })();
 let rz;window.addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(view==="inicio")render()},150)});
 initStore();
